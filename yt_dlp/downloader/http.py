@@ -333,8 +333,11 @@ class HttpFD(FileDownloader):
 
             if ctx.stream is None:
                 self.to_stderr('\n')
-                self.report_error('Did not get any data blocks')
-                return False
+                err = Exception("Did not get any data blocks")
+                retry(err)
+                #self.to_stderr('\n')
+                #self.report_error('Did not get any data blocks')
+                #return False
 
             if not is_test and ctx.chunk_size and ctx.content_len is not None and byte_counter < ctx.content_len:
                 ctx.resume_len = byte_counter
